@@ -10,14 +10,13 @@ public class Main {
 	
 	public static void main(String [] args) throws IOException {
 		// START - Tokenize the code
-		CReader.tokenTheCodeDude();
+//		CReader.tokenTheCodeDude();
 		// END - Tokenize the code
 		
-		FileReader in = new FileReader("/Users/Air11/Documents/workspace/Compiler/src/out_files/Code01.txt");
+		FileReader in = new FileReader("/Users/mohannadbanayosi/Documents/workspace/Compiler/src/out_files/Code001.txt");
 	    current = new BufferedReader(in);
 	    
 	    read();
-	    System.out.println(currentToken);
 //	    
 //	    while(true){
 //	    	read();
@@ -56,14 +55,17 @@ public class Main {
 		read();
 		
 		if(checkEnd()) {
+			System.out.println("End of the File (Everything Good)");
 			return true;
 		}
 		
 		// START - Check the header of the method
 		while(true) {
 			if(!checkMethodHeader()) {
+				System.out.println("Method header is NOT okay");
 				return false;
 			}
+			System.out.println("Method header is okay");
 			
 			read();
 			
@@ -76,8 +78,10 @@ public class Main {
 				else {
 					// START - Check the body of the method
 					if(!checkMethodBody()) {
+						System.out.println("Method body is NOT okay");
 						return false;
 					}
+					System.out.println("Method body is okay");
 					if(checkEnd()) {
 						return true;
 					}
@@ -95,49 +99,25 @@ public class Main {
 	}
 	
 	public static boolean checkClassHeader() throws IOException {
-		// Checks
-		
-		System.out.println(currentToken);
 		if(checkModifier()) {
-			System.out.println("currentToken");
 			read();
 		}
-		System.out.println(currentToken);
 		
 		if(!currentToken.equals("KW\tclass")) {
 			return false;
 		}
+		
 		read();
-		System.out.println(currentToken);
-		
-		
-		
-//		if(checkModifier()) {
-//			read();
-//		}
-//		
-//		if (checkStatic()) {
-//			read();
-//		}
-//		
-//		if (checkReturn()) {
-//			read();
-//		}
-//		else {
-//			return false;
-//		}
 		
 		if(!checkID()) {
 			return false;
 		}
 		
 		read();
-		System.out.println(currentToken);
 		
 		if(!currentToken.equals("LC\t{")) {
 			return false;
 		}
-		System.out.println(currentToken);
 		
 		return true;				
 	}
