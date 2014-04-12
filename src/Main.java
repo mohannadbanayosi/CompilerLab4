@@ -142,12 +142,23 @@ public class Main {
 		return true;				
 	}
 	
-	private static boolean checkID() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	public static boolean checkMethodHeader() {
+	public static boolean checkMethodHeader() throws IOException {
+		if(currentToken.equals("LB\t(")){
+			read();
+			if(checkIdentifier(currentToken)){
+				read();
+				if(currentToken.substring(beginIndex).equals("ID\t)")){
+					read();
+					if(currentToken.equals("RB\t)")){
+					
+					}
+				}
+			}
+		}
+		
+		else{
+			return false;
+		}
 		return true;
 	}
 	
@@ -199,6 +210,23 @@ public class Main {
 			return true;
 		}
 		return false;
+
+	public static boolean checkID(String x){
+		String splited = x.substring(0, 2);
+		if (splited.equals("ID")){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public static boolean checkIdentifier(String x) {
+		if (currentToken.equals("ID\tint") || currentToken.equals("ID\tdouble") || currentToken.equals("ID\tstring") || currentToken.equals("ID\tchar") || currentToken.equals("ID\tlong") || currentToken.equals("ID\tshort") || currentToken.equals("ID\tboolean") || currentToken.equals("ID\tfloat") || currentToken.equals("ID\tInteger")){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }
