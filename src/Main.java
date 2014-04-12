@@ -13,11 +13,11 @@ public class Main {
 		CReader.tokenTheCodeDude();
 		// END - Tokenize the code
 		
-		FileReader in = new FileReader("/Users/mohannadbanayosi/Documents/workspace/Compiler/src/out_files/Code01.txt");
+		FileReader in = new FileReader("/Users/mohannadbanayosi/Documents/workspace/Compiler/src/out_files/Code001.txt");
 	    current = new BufferedReader(in);
 	    
-//	    read();
-//	    System.out.println(currentToken);
+	    read();
+	    System.out.println(currentToken);
 //	    
 //	    while(true){
 //	    	read();
@@ -47,8 +47,10 @@ public class Main {
 	public static boolean check() throws IOException {
 		// START - Check the header of the class
 		if(!checkClassHeader()) {
+			System.out.println("Class is NOT okay");
 			return false;
 		}
+		System.out.println("Class is okay");
 		// END - Check the header of the class
 		
 		read();
@@ -65,20 +67,25 @@ public class Main {
 			
 			read();
 			
-			if(currentToken.equals("RC\t}")) {
-				if(checkEnd()) {
-					return true;
+			try {
+				if(currentToken.equals("RC\t}")) {
+					if(checkEnd()) {
+						return true;
+					}
+				}
+				else {
+					// START - Check the body of the method
+					if(!checkMethodBody()) {
+						return false;
+					}
+					if(checkEnd()) {
+						return true;
+					}
+					// END - Check the body of the method
 				}
 			}
-			else {
-				// START - Check the body of the method
-				if(!checkMethodBody()) {
-					return false;
-				}
-				if(checkEnd()) {
-					return true;
-				}
-				// END - Check the body of the method
+			catch (NullPointerException e) {
+				return false;
 			}
 		}
 		// END - Check the header of the method
@@ -89,14 +96,57 @@ public class Main {
 	
 	public static boolean checkClassHeader() throws IOException {
 		// Checks
-		if(currentToken.equals("LC\t{")) {
-			return true;
+		
+		System.out.println(currentToken);
+		if(checkModifier()) {
+			System.out.println("currentToken");
+			read();
 		}
-		else {
+		System.out.println(currentToken);
+		
+		if(!currentToken.equals("KW\tclass")) {
 			return false;
 		}
+		read();
+		System.out.println(currentToken);
+		
+		
+		
+//		if(checkModifier()) {
+//			read();
+//		}
+//		
+//		if (checkStatic()) {
+//			read();
+//		}
+//		
+//		if (checkReturn()) {
+//			read();
+//		}
+//		else {
+//			return false;
+//		}
+		
+		if(!checkID()) {
+			return false;
+		}
+		
+		read();
+		System.out.println(currentToken);
+		
+		if(!currentToken.equals("LC\t{")) {
+			return false;
+		}
+		System.out.println(currentToken);
+		
+		return true;				
 	}
 	
+	private static boolean checkID() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	public static boolean checkMethodHeader() {
 		return true;
 	}
@@ -126,6 +176,29 @@ public class Main {
 		String line = current.readLine();
 		currentToken = line;
 				
+	}
+	
+	public static boolean checkModifier() {
+		if((currentToken.equals("KW\tpublic")) || (currentToken.equals("KW\tprivate")) || (currentToken.equals("KW\tprivate"))) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean checkStatic() {
+		if((currentToken.equals("KW\tstatic"))) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean checkReturn() {
+		if((currentToken.equals("KW\tvoid")) || (currentToken.equals("KW\tint")) || (currentToken.equals("KW\tlong")) || 
+				(currentToken.equals("KW\tshort")) || (currentToken.equals("KW\tfloat")) || (currentToken.equals("KW\tboolean")) || 
+				(currentToken.equals("KW\tString")) || (currentToken.equals("KW\tchar"))) {
+			return true;
+		}
+		return false;
 	}
 
 }
