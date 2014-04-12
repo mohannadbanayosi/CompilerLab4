@@ -13,7 +13,7 @@ public class Main {
 		CReader.tokenTheCodeDude();
 		// END - Tokenize the code
 		
-		FileReader in = new FileReader("/Users/Air11/Documents/workspace/Compiler/src/out_files/Code01.txt");
+		FileReader in = new FileReader("/Users/Air11/Documents/workspace/Compiler/src/out_files/Code0001.txt");
 	    current = new BufferedReader(in);
 	    
 	    read();
@@ -62,6 +62,7 @@ public class Main {
 		// START - Check the header of the method
 		while(true) {
 			if(!checkMethodHeader()) {
+				System.out.println("fail");
 				return false;
 			}
 			
@@ -143,23 +144,85 @@ public class Main {
 	}
 	
 	public static boolean checkMethodHeader() throws IOException {
-		if(currentToken.equals("LB\t(")){
+		if(checkModifier()) {
+			System.out.println(currentToken);
 			read();
-			if(checkIdentifier()){
-				read();
-				if(checkID()){
-					read();
-					if(currentToken.equals("RB\t)")){
-					
-					}
-				}
-			}
 		}
 		
-		else{
+		
+		if (checkStatic()) {
+			System.out.println(currentToken);
+			read();
+		}
+//	
+		if (checkReturn()) {
+			System.out.println(currentToken);
+			read();
+		}
+		else {
+			System.out.println(currentToken);
 			return false;
 		}
-		return true;
+		if (checkID()){
+			System.out.println(currentToken);
+			read();
+		}
+		else {
+			System.out.println(currentToken);
+			return false;
+		}
+		
+		if(currentToken.equals("LB\t(")){
+			System.out.println(currentToken);
+			read();}
+		else{
+			System.out.println(currentToken);
+			return false;
+		}
+		if(currentToken.equals("RB\t)")){
+			System.out.println(currentToken);
+			read();
+			
+		}
+		else{
+			do{
+			if(checkIdentifier()){
+				System.out.println(currentToken);
+				read();}
+			else{
+				System.out.println(currentToken);
+				return false;
+			}
+			if(checkID()){
+				System.out.println(currentToken);
+				read();
+			}
+			else{
+				System.out.println(currentToken);
+				return false;
+			}
+			}while(currentToken.equals("FA\t,"));
+			if(currentToken.equals("RB\t)")){
+				System.out.println(currentToken);
+				read();
+				
+			}
+			else{
+				System.out.println(currentToken);
+				return false;
+			}
+
+		}
+		if(currentToken.equals("LC\t{")){
+			
+			System.out.println("test");
+		
+			return true;
+		}
+		else{
+			System.out.println(currentToken);
+			return false;
+		}
 	}
 	
 	public static boolean checkMethodBody() {
