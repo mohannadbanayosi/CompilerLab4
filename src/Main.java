@@ -12,7 +12,7 @@ public class Main {
 		// START - Tokenize the code
 //		CReader.tokenTheCodeDude();
 		// END - Tokenize the code
-		
+
 
 		FileReader in = new FileReader("/Users/Air11/Documents/workspace/Compiler/src/out_files/Code0001.txt");
 
@@ -208,7 +208,94 @@ public class Main {
 		}
 	}
 	
-	public static boolean checkMethodBody() {
+	public static boolean checkMethodBody() throws IOException {
+		while(true){
+		System.out.println(currentToken);
+		if(checkIdentifier()){
+			System.out.println("gowa identified");
+			read();
+			System.out.println(currentToken);
+			if (!checkArray()){
+				System.out.println("not array");
+				return false;
+				
+			}
+			else{
+				System.out.println(" array");
+				
+				System.out.println(currentToken);
+			}
+		}
+		
+		
+		if(checkID()){
+			System.out.println("id");
+			read();
+		}
+		else{
+			return false;		
+		}
+		
+		System.out.println(currentToken);
+		
+		if(currentToken.equals("AO\t=")){
+			read();
+			System.out.println(currentToken);
+			if(!checkTypeCast()){
+				return false;
+			}
+			if(currentToken.equals("LB\t(")){
+				do{
+					
+					if(!checkValue()){
+						return false;
+					}
+					else{
+						read();
+					}
+				}while(checkOperator());
+				if(currentToken.equals("RB\t)")){
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				System.out.println("mohesein");
+				do{
+					if(!checkValue()){
+						return false;
+					}
+					else{
+						System.out.println(currentToken);
+					}
+				}while(checkOperator());
+			}
+			
+			if(currentToken.equals("SM\t;")){
+				read();
+			}
+			else {
+				return false;
+			}
+
+		}
+		else{
+			if(currentToken.equals("SM\t;")){
+				read();
+			}
+			else {
+				return false;
+			}
+	
+		}
+		
+		if(currentToken.equals("RC\t}")){
+			break;
+		}
+
+		}
 		return true;
 	}
 	
@@ -260,6 +347,7 @@ public class Main {
 
 	public static boolean checkID(){
 		String splited = currentToken.substring(0, 2);
+		System.out.println(splited + "asdasdasdsa");
 		if (splited.equals("ID")){
 			return true;
 		}
@@ -268,12 +356,75 @@ public class Main {
 		}
 	}
 	public static boolean checkIdentifier() {
-		if (currentToken.equals("ID\tint") || currentToken.equals("ID\tdouble") || currentToken.equals("ID\tstring") || currentToken.equals("ID\tchar") || currentToken.equals("ID\tlong") || currentToken.equals("ID\tshort") || currentToken.equals("ID\tboolean") || currentToken.equals("ID\tfloat") || currentToken.equals("ID\tInteger")){
+		if (currentToken.equals("KW\tint") || currentToken.equals("KW\tdouble") || currentToken.equals("KW\tstring") || currentToken.equals("KW\tchar") || currentToken.equals("KW\tlong") || currentToken.equals("KW\tshort") || currentToken.equals("KW\tboolean") || currentToken.equals("KW\tfloat") || currentToken.equals("KW\tInteger")){
 			return true;
 		}
 		else{
 			return false;
 		}
 	}
+	public static boolean checkArray() throws IOException {
+		if(currentToken.equals("LS\t[")){
+			read();
+			if (currentToken.equals("RS\t]")){
+				return true;
+				
+			}
+			else
+				return false;
+		}
+		else {
+			return true;
+		}
+		
+		
+	}
+	public static boolean checkTypeCast() throws IOException {
+		if(currentToken.equals("LB\t(")){
+			read();
+			if(checkIdentifier()){
+				read();
+				if(currentToken.equals("RB\t)")){
+					read();
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else{
+			read();
+			return true;
+		}
+	}
 
+	public static boolean checkValue() throws IOException {
+		String value = currentToken.substring(0,2);
+		if(value.equals("MO")|| value.equals("PO")){
+			read();
+		}
+		if(value.equals("NM")||value.equals("CH")||value.equals("ST")||currentToken.equals("KW\ttrue")||currentToken.equals("KW\tfalse")){
+			read();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public static boolean checkOperator() throws IOException {
+		String value = currentToken.substring(0,2);
+		if(value.equals("PO")||value.equals("MO")||value.equals("DB")||value.equals("MB")|| currentToken.equals("null\t%")){
+			read();
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
 }
+
