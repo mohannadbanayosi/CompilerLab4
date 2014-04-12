@@ -13,7 +13,7 @@ public class Main {
 		CReader.tokenTheCodeDude();
 		// END - Tokenize the code
 		
-		FileReader in = new FileReader("/Users/mohannadbanayosi/Documents/workspace/Compiler/src/out_files/Code001.txt");
+		FileReader in = new FileReader("/Users/Air11/Documents/workspace/Compiler/src/out_files/Code01.txt");
 	    current = new BufferedReader(in);
 	    
 	    read();
@@ -145,9 +145,9 @@ public class Main {
 	public static boolean checkMethodHeader() throws IOException {
 		if(currentToken.equals("LB\t(")){
 			read();
-			if(checkIdentifier(currentToken)){
+			if(checkIdentifier()){
 				read();
-				if(currentToken.substring(beginIndex).equals("ID\t)")){
+				if(checkID()){
 					read();
 					if(currentToken.equals("RB\t)")){
 					
@@ -212,8 +212,8 @@ public class Main {
 		return false;
 	}
 
-	public static boolean checkID(String x){
-		String splited = x.substring(0, 2);
+	public static boolean checkID(){
+		String splited = currentToken.substring(0, 2);
 		if (splited.equals("ID")){
 			return true;
 		}
@@ -221,7 +221,7 @@ public class Main {
 			return false;
 		}
 	}
-	public static boolean checkIdentifier(String x) {
+	public static boolean checkIdentifier() {
 		if (currentToken.equals("ID\tint") || currentToken.equals("ID\tdouble") || currentToken.equals("ID\tstring") || currentToken.equals("ID\tchar") || currentToken.equals("ID\tlong") || currentToken.equals("ID\tshort") || currentToken.equals("ID\tboolean") || currentToken.equals("ID\tfloat") || currentToken.equals("ID\tInteger")){
 			return true;
 		}

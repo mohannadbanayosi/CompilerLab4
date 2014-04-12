@@ -90,8 +90,8 @@ public class CReader
 	
 	public static void tokenTheCodeDude() throws IOException
 	{
-		BufferedReader reader = new BufferedReader(new FileReader("/Users/mohannadbanayosi/Documents/workspace/Compiler/src/in_files/Code0001.java"));
-		BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/mohannadbanayosi/Documents/workspace/Compiler/src/out_files/Code0001.txt"));
+		BufferedReader reader = new BufferedReader(new FileReader("/Users/Air11/Documents/workspace/Compiler/src/in_files/Code0001.java"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/Air11/Documents/workspace/Compiler/src/out_files/Code0001.txt"));
 
 		boolean streamHasInput = true;
 		char ch, EOF = (char)(-1);
